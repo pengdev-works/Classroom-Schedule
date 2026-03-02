@@ -1,0 +1,6 @@
+node_modules
+dist
+.env
+classroom-client/node_modules
+classroom-client/dist
+server/node_modules
