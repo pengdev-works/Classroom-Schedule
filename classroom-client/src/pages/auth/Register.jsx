@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { registerUser } from "../../services/authService";
+import { registerUser, loginUser } from "../../services/authService";
 import { useAuth } from "../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -11,9 +12,9 @@ const Register = () => {
     name: "",
     email: "",
     password: "",
+    role: "admin", // default role
   });
 
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -22,25 +23,47 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
     setLoading(true);
 
     try {
       // Register user
       await registerUser(form);
 
-      // Auto login after register
-      await login({
+      // Auto-login after successful registration
+      const loginRes = await loginUser({
         email: form.email,
         password: form.password,
       });
 
-      navigate("/");
-    } catch (err) {
-      setError(err.response?.data?.message || "Registration failed");
-    }
+      // Save user data in auth context
+      login(loginRes.data.user, loginRes.data.token);
 
-    setLoading(false);
+      // ✅ Success Alert
+      await Swal.fire({
+        title: "Registration Successful!",
+        text: "Welcome! You are now logged in.",
+        icon: "success",
+        confirmButtonColor: "#2563EB",
+        timer: 2000,
+        timerProgressBar: true,
+      });
+
+      navigate("/"); // redirect to dashboard
+    } catch (err) {
+      console.error(err);
+      // Display detailed error from backend if available
+      const errorMessage = err.response?.data?.message || "Registration failed";
+      
+      // ✅ Error Alert
+      Swal.fire({
+        title: "Oops!",
+        text: errorMessage,
+        icon: "error",
+        confirmButtonColor: "#EF4444",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -52,12 +75,6 @@ const Register = () => {
         <h2 className="text-2xl font-bold mb-6 text-center">
           Create Account
         </h2>
-
-        {error && (
-          <div className="bg-red-100 text-red-600 p-2 mb-4 rounded">
-            {error}
-          </div>
-        )}
 
         <input
           type="text"
@@ -81,10 +98,24 @@ const Register = () => {
           type="password"
           name="password"
           placeholder="Password"
-          className="w-full border p-2 mb-6 rounded"
+          className="w-full border p-2 mb-4 rounded"
           onChange={handleChange}
           required
         />
+
+        <label className="block mb-4">
+          Role
+          <select
+            name="role"
+            value={form.role}
+            onChange={handleChange}
+            className="w-full border p-2 rounded mt-1"
+          >
+            <option value="admin">Admin</option>
+            <option value="student">Student</option>
+            <option value="user">User</option>
+          </select>
+        </label>
 
         <button
           type="submit"

@@ -1,21 +1,20 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "Classroom Schedule Management Backend",
-  "main": "server.js",
-  "type": "module",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.js",
-    "start": "node server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "type": "module",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
-    "express": "^4.19.2",
+    "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.19.0"
   },

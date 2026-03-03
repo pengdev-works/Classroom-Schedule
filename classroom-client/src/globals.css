@@ -1,3 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Import entire Tailwind bundle via PostCSS plugin. This is equivalent to
+   @tailwind base/components/utilities but uses a single statement. The file is
+   still included globally by `main.jsx` and should not be imported directly in
+   every component – Tailwind generates a global stylesheet.
+
+   If your editor complains about the import, it’s harmless; the build will
+   process it correctly. */
+@import "tailwindcss";

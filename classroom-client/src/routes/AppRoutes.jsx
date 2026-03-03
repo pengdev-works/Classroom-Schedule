@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import Dashboard from "../pages/dashboard/Dashboard";
@@ -6,36 +6,54 @@ import Classrooms from "../pages/classrooms/Classrooms";
 import Teachers from "../pages/teachers/Teachers";
 import Subjects from "../pages/subjects/Subjects";
 import Schedule from "../pages/schedules/Schedule";
+import Enrollments from "../pages/enrollments/Enrollments";
 import { useAuth } from "../hooks/useAuth";
 
-const PrivateRoute = ({ children }) => {
+const AppRoutes = () => {
   const { user, loading } = useAuth();
 
-  if (loading) return <div>Loading...</div>;
-  return user ? children : <Navigate to="/login" />;
-};
+  if (loading) {
+    return <div className="flex justify-center items-center h-screen">Loading...</div>;
+  }
 
-const AppRoutes = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+    <Routes>
+      {/* Auth routes */}
+      <Route
+        path="/login"
+        element={!user ? <Login /> : <Navigate to="/" replace />}
+      />
+      <Route
+        path="/register"
+        element={!user ? <Register /> : <Navigate to="/" replace />}
+      />
 
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          }
-        />
-        <Route path="/classrooms" element={<PrivateRoute><Classrooms /></PrivateRoute>} />
-        <Route path="/teachers" element={<PrivateRoute><Teachers /></PrivateRoute>} />
-        <Route path="/subjects" element={<PrivateRoute><Subjects /></PrivateRoute>} />
-        <Route path="/schedules" element={<PrivateRoute><Schedule /></PrivateRoute>} />
-      </Routes>
-    </BrowserRouter>
+      {/* Dashboard and protected routes */}
+      <Route
+        path="/"
+        element={user ? <Dashboard /> : <Navigate to="/login" replace />}
+      />
+      <Route
+        path="/classrooms"
+        element={user ? <Classrooms /> : <Navigate to="/login" replace />}
+      />
+      <Route
+        path="/teachers"
+        element={user ? <Teachers /> : <Navigate to="/login" replace />}
+      />
+      <Route
+        path="/subjects"
+        element={user ? <Subjects /> : <Navigate to="/login" replace />}
+      />
+      <Route
+        path="/schedules"
+        element={user ? <Schedule /> : <Navigate to="/login" replace />}
+      />
+      <Route
+        path="/enrollments"
+        element={user ? <Enrollments /> : <Navigate to="/login" replace />}
+      />
+    </Routes>
   );
 };
 
