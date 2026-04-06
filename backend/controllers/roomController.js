@@ -10,7 +10,7 @@ exports.getAllRooms = async (req, res) => {
 };
 
 exports.createRoom = async (req, res) => {
-    const { capacity, building, roomNumber } = req.body;
+    const { capacity, building, room_number } = req.body;
     try {
         const result = await query(
             'INSERT INTO rooms (capacity, building, room_number) VALUES ($1, $2, $3) RETURNING *',
@@ -24,7 +24,7 @@ exports.createRoom = async (req, res) => {
 
 exports.updateRoom = async (req, res) => {
     const { id } = req.params;
-    const { capacity, building, roomNumber } = req.body;
+    const { capacity, building, room_number } = req.body;
     try {
         const result = await query(
             'UPDATE rooms SET capacity = $1, building = $2, room_number = $3 WHERE id = $4 RETURNING *',
