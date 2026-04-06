@@ -42,19 +42,29 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div className="flex items-center justify-center min-h-screen p-6 relative overflow-hidden bg-slate-950">
+      {/* Background Orbs */}
+      <div className="absolute top-0 -right-20 w-96 h-96 bg-indigo-600/20 rounded-full blur-[120px]" />
+      <div className="absolute bottom-0 -left-20 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px]" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-slate-900/50 rounded-full blur-[160px]" />
+
       <motion.div 
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-        className="premium-card w-full max-w-md bg-white/10"
+        initial={{ opacity: 0, y: 20, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="premium-card w-full max-w-md bg-slate-900/40 backdrop-blur-2xl border-indigo-500/20 shadow-2xl relative z-10"
       >
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-indigo-600/20 text-indigo-400 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <UserPlus size={32} />
-          </div>
-          <h2 className="text-3xl font-bold gradient-text">Join CMCS</h2>
-          <p className="text-slate-400 mt-2 text-sm uppercase tracking-widest font-medium">Create your account</p>
+        <div className="text-center mb-10">
+          <motion.div 
+             initial={{ scale: 0, rotate: 20 }}
+             animate={{ scale: 1, rotate: 0 }}
+             transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+             className="w-24 h-24 bg-gradient-to-tr from-purple-600 to-indigo-600 rounded-[2rem] flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-purple-500/40 ring-4 ring-purple-500/10"
+          >
+            <UserPlus className="text-white w-12 h-12" />
+          </motion.div>
+          <h2 className="text-4xl font-black gradient-text tracking-tighter mb-2 italic">JOIN UA</h2>
+          <p className="text-[10px] text-slate-500 font-black uppercase tracking-[0.2em]">Create your unified account</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -107,15 +117,13 @@ const Register = () => {
           <button 
             type="submit" 
             disabled={loading}
-            className="btn-premium w-full py-4 flex items-center justify-center gap-2 group mt-4 h-14"
+            className="btn-premium w-full py-4 text-lg shadow-xl shadow-indigo-600/20 active:scale-[0.98] transition-all mt-6"
           >
-            {loading ? (
-              <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-            ) : (
-              <>
-                Create Account
-                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-              </>
+            {loading ? <span className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto" /> : (
+                <div className="flex items-center justify-center gap-3">
+                    <span className="font-black uppercase tracking-widest text-sm">Register Account</span>
+                    <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                </div>
             )}
           </button>
         </form>

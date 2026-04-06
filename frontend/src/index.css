@@ -10,27 +10,51 @@
 
 @layer base {
   body {
-    @apply bg-slate-900 text-slate-100 min-h-screen overflow-x-hidden;
-    background: radial-gradient(circle at top right, #312e81, transparent),
-                radial-gradient(circle at bottom left, #1e1b4b, transparent),
+    @apply bg-slate-900 text-slate-100 min-h-screen overflow-x-hidden antialiased select-none;
+    background: radial-gradient(circle at 0% 0%, #1e1b4b, transparent 40%),
+                radial-gradient(circle at 100% 0%, #312e81, transparent 40%),
                 #0f172a;
   }
 }
 
 @utility glass-morphism {
-  @apply bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-xl;
+  @apply bg-slate-900/40 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl;
+}
+
+@utility glass-morphism-light {
+  @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-xl shadow-lg;
 }
 
 @utility premium-card {
-  @apply glass-morphism p-6 transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-2xl hover:border-white/40;
+  @apply glass-morphism p-6 transition-all duration-300 hover:border-indigo-500/30 hover:bg-slate-800/40 hover:-translate-y-1 hover:shadow-indigo-500/10;
 }
 
 @utility gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400;
+  @apply bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-500;
 }
 
 @utility btn-premium {
-  @apply px-6 py-2 rounded-lg font-semibold transition-all duration-300 
-         bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500
-         shadow-lg hover:shadow-indigo-500/50 transform hover:scale-105 active:scale-95;
+  @apply px-6 py-3 rounded-xl font-bold transition-all duration-300 
+         bg-gradient-to-tr from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500
+         shadow-lg shadow-indigo-600/20 hover:shadow-indigo-500/40 transform hover:scale-[1.02] active:scale-[0.98]
+         flex items-center justify-center gap-2 text-white disabled:opacity-50 disabled:pointer-events-none;
+}
+
+@utility skeleton {
+  @apply bg-slate-800 relative overflow-hidden before:absolute before:inset-0 
+         before:-translate-x-full before:animate-[shimmer_2s_infinite]
+         before:bg-gradient-to-r before:from-transparent before:via-white/5 before:to-transparent;
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+.custom-scrollbar::-webkit-scrollbar { width: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+@media print {
+  .no-print { display: none !important; }
 }
