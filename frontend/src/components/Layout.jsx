@@ -16,14 +16,16 @@ const Layout = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-  const navItems = [
+  const allNavItems = [
     { name: 'Dashboard', path: '/', icon: <LayoutDashboard size={20} /> },
-    { name: 'Rooms', path: '/rooms', icon: <MapPin size={20} /> },
-    { name: 'Faculty', path: '/faculty', icon: <Users size={20} /> },
-    { name: 'Subjects', path: '/subjects', icon: <BookOpen size={20} /> },
-    { name: 'Sections', path: '/sections', icon: <Layers size={20} /> },
+    { name: 'Rooms', path: '/rooms', icon: <MapPin size={20} />, roles: ['admin', 'teacher'] },
+    { name: 'Faculty', path: '/faculty', icon: <Users size={20} />, roles: ['admin', 'teacher'] },
+    { name: 'Subjects', path: '/subjects', icon: <BookOpen size={20} />, roles: ['admin', 'teacher'] },
+    { name: 'Sections', path: '/sections', icon: <Layers size={20} />, roles: ['admin', 'teacher'] },
     { name: 'Schedule', path: '/schedule', icon: <Calendar size={20} /> },
   ];
+
+  const navItems = allNavItems.filter(item => !item.roles || item.roles.includes(user.role));
 
   const handleLogout = () => {
     localStorage.removeItem('token');

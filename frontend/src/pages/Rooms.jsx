@@ -8,6 +8,8 @@ const Rooms = () => {
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({ capacity: '', building: '', room_number: '' });
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const isAdmin = user.role === 'admin';
 
     const fetchRooms = async () => {
         try {
@@ -68,13 +70,15 @@ const Rooms = () => {
                     <h2 className="text-3xl font-bold gradient-text">Classrooms</h2>
                     <p className="text-slate-400">Manage school facilities and capacities</p>
                 </div>
-                <button 
-                  onClick={() => setShowModal(true)}
-                  className="btn-premium flex items-center gap-2"
-                >
-                    <Plus size={18} />
-                    Add New Room
-                </button>
+                {isAdmin && (
+                  <button 
+                    onClick={() => setShowModal(true)}
+                    className="btn-premium flex items-center gap-2"
+                  >
+                      <Plus size={18} />
+                      Add New Room
+                  </button>
+                )}
             </div>
 
             {loading ? (
@@ -89,17 +93,19 @@ const Rooms = () => {
                                <div className="bg-indigo-600/20 p-3 rounded-xl text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition-all">
                                   <MapPin size={24} />
                                </div>
-                               <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                  <button className="p-2 hover:bg-slate-700/50 rounded-lg text-slate-300">
-                                    <Edit3 size={16} />
-                                  </button>
-                                  <button 
-                                    onClick={() => handleDelete(room.id)}
-                                    className="p-2 hover:bg-red-500/20 rounded-lg text-red-400"
-                                  >
-                                    <Trash2 size={16} />
-                                  </button>
-                               </div>
+                               {isAdmin && (
+                                 <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button className="p-2 hover:bg-slate-700/50 rounded-lg text-slate-300">
+                                      <Edit3 size={16} />
+                                    </button>
+                                    <button 
+                                      onClick={() => handleDelete(room.id)}
+                                      className="p-2 hover:bg-red-500/20 rounded-lg text-red-400"
+                                    >
+                                      <Trash2 size={16} />
+                                    </button>
+                                 </div>
+                               )}
                             </div>
                             <h3 className="text-xl font-bold text-slate-100">{room.room_number}</h3>
                             <div className="mt-4 space-y-2">
