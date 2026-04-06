@@ -14,7 +14,7 @@ exports.createRoom = async (req, res) => {
     try {
         const result = await query(
             'INSERT INTO rooms (capacity, building, room_number) VALUES ($1, $2, $3) RETURNING *',
-            [capacity, building, roomNumber]
+            [capacity, building, room_number]
         );
         res.status(201).json(result.rows[0]);
     } catch (error) {
@@ -28,7 +28,7 @@ exports.updateRoom = async (req, res) => {
     try {
         const result = await query(
             'UPDATE rooms SET capacity = $1, building = $2, room_number = $3 WHERE id = $4 RETURNING *',
-            [capacity, building, roomNumber, id]
+            [capacity, building, room_number, id]
         );
         res.json(result.rows[0]);
     } catch (error) {
