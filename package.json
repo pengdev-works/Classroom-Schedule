@@ -3,8 +3,17 @@
   "version": "1.0.0",
   "scripts": {
     "start": "node server.js",
-    "build": "cd backend && npm install",
-    "test-connection": "node test-db.js"
+    "build": "npm install",
+    "migrate": "cd backend && npm run migrate",
+    "setup-admin": "cd backend && npm run setup-admin"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.1",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.20.0"
   },
   "engines": {
     "node": ">=18.0.0"
