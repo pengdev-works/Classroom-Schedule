@@ -7,6 +7,7 @@ import Faculty from './pages/Faculty';
 import Subjects from './pages/Subjects';
 import Sections from './pages/Sections';
 import Schedule from './pages/Schedule';
+import Register from './pages/Register';
 import Layout from './components/Layout';
 
 const PrivateRoute = ({ children }) => {
@@ -19,6 +20,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/" element={<PrivateRoute><Layout /></PrivateRoute>}>
           <Route index element={<Dashboard />} />
           <Route path="rooms" element={<Rooms />} />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { LogIn, User, Lock, Loader2 } from 'lucide-react';
 import api from '../utils/api';
@@ -104,9 +104,15 @@ const Login = () => {
           </button>
         </form>
 
-        <p className="text-center text-slate-500 text-sm mt-8">
-          Classroom Schedule Management System &copy; 2026
-        </p>
+        <div className="mt-8 pt-6 border-t border-slate-800/50 text-center">
+          <p className="text-slate-400 text-sm">
+            Don't have an account? 
+            <Link to="/register" className="text-indigo-400 font-bold ml-2 hover:text-indigo-300 transition-colors">Sign Up</Link>
+          </p>
+          <p className="text-slate-500 text-xs mt-4 opacity-50">
+            Classroom Schedule Management System &copy; 2026
+          </p>
+        </div>
       </motion.div>
     </div>
   );
