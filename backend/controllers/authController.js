@@ -3,12 +3,12 @@ const jwt = require('jsonwebtoken');
 const { query } = require('../config/db');
 
 exports.register = async (req, res) => {
-    const { username, password, role, fullName } = req.body;
+    const { username, password, role } = req.body;
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         const result = await query(
-            'INSERT INTO users (username, password, role, full_name) VALUES ($1, $2, $3, $4) RETURNING id, username, role, full_name',
-            [username, hashedPassword, role, fullName]
+            'INSERT INTO users (username, password, role) VALUES ($1, $2, $3) RETURNING id, username, role',
+            [username, hashedPassword, role]
         );
         res.status(201).json(result.rows[0]);
     } catch (error) {
@@ -38,8 +38,7 @@ exports.login = async (req, res) => {
             user: {
                 id: user.id,
                 username: user.username,
-                role: user.role,
-                fullName: user.full_name
+                role: user.role
             }
         });
     } catch (error) {

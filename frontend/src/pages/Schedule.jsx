@@ -16,7 +16,7 @@ const Schedule = () => {
         room_id: '',
         faculty_id: '',
         subject_id: '',
-        section_id: '',
+        section: '',
         day_of_week: '',
         start_time: '',
         end_time: ''
@@ -59,7 +59,7 @@ const Schedule = () => {
                 room_id: '',
                 faculty_id: '',
                 subject_id: '',
-                section_id: '',
+                section: '',
                 day_of_week: '',
                 start_time: '',
                 end_time: ''
@@ -189,15 +189,14 @@ const Schedule = () => {
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-xs font-bold text-slate-400 uppercase ml-1">Section</label>
-                                    <select 
+                                    <input 
+                                        type="text"
                                         className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 outline-none focus:ring-2 focus:ring-indigo-500 text-slate-200"
-                                        value={formData.section_id}
-                                        onChange={(e) => setFormData({...formData, section_id: e.target.value})}
+                                        value={formData.section}
+                                        onChange={(e) => setFormData({...formData, section: e.target.value})}
                                         required
-                                    >
-                                        <option value="">Select Section</option>
-                                        {sections.map(sec => <option key={sec.id} value={sec.id}>{sec.name}</option>)}
-                                    </select>
+                                        placeholder="e.g. BSCS 4A"
+                                    />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-xs font-bold text-slate-400 uppercase ml-1">Faculty</label>
