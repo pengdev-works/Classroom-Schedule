@@ -11,7 +11,6 @@ const migrate = async () => {
                 username TEXT UNIQUE NOT NULL,
                 password TEXT NOT NULL,
                 role TEXT CHECK (role IN ('admin', 'teacher', 'student')) NOT NULL,
-                full_name TEXT NOT NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         `);
@@ -46,7 +45,9 @@ const migrate = async () => {
             )
         `);
 
-        // Sections table
+        // Sections table - Note: User is using flat "section" text in schedules, 
+        // but we keep this table optional or just skip it
+        /*
         await query(`
             CREATE TABLE IF NOT EXISTS sections (
                 id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -54,6 +55,7 @@ const migrate = async () => {
                 academic_program TEXT NOT NULL
             )
         `);
+        */
 
         // Schedules table
         await query(`
@@ -62,7 +64,7 @@ const migrate = async () => {
                 room_id UUID REFERENCES rooms(id) ON DELETE CASCADE,
                 faculty_id UUID REFERENCES faculty(id) ON DELETE CASCADE,
                 subject_id UUID REFERENCES subjects(id) ON DELETE CASCADE,
-                section_id UUID REFERENCES sections(id) ON DELETE CASCADE,
+                section TEXT NOT NULL,
                 day_of_week TEXT NOT NULL,
                 start_time TIME NOT NULL,
                 end_time TIME NOT NULL,
