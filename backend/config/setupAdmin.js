@@ -6,7 +6,7 @@ const setupAdmin = async () => {
         console.log('Setting up initial admin...');
         const hashedPassword = await bcrypt.hash('admin123', 10);
         await query(
-            'INSERT INTO users (username, password, role, full_name) VALUES ($1, $2, $3, $4) ON CONFLICT (username) DO NOTHING',
+            'INSERT INTO users (username, password, role, full_name) VALUES ($1, $2, $3, $4) ON CONFLICT (username) DO UPDATE SET password = EXCLUDED.password',
             ['admin', hashedPassword, 'admin', 'System Administrator']
         );
         console.log('Initial admin created (username: admin, password: admin123)');
