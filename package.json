@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "scripts": {
     "start": "node server.js",
-    "build": "npm install",
-    "migrate": "cd backend && npm run migrate",
-    "setup-admin": "cd backend && npm run setup-admin"
+    "build": "npm install && npm run migrate && npm run setup-admin",
+    "migrate": "cd backend && node config/migrate.js",
+    "setup-admin": "cd backend && node config/setupAdmin.js",
+    "test-connection": "node test-db.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
